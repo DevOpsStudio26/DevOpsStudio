@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/* Site colors. Dark is the default; `html.light` swaps them for light mode. */
+@theme {
+  --font-sans: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+
+  --color-bg: #0a0a0a;
+  --color-surface: #111111;
+  --color-elevated: #262626;
+  --color-line: #262626;
+  --color-fg: #fafafa;
+  --color-fg-muted: #a3a3a3;
+  --color-fg-subtle: #737373;
+
+  --color-brand: #2563eb;
+  --color-brand-hover: #1d4ed8;
+  --color-brand-bright: #3b82f6;
+  --color-violet: #7c3aed;
+  --color-violet-bright: #a855f7;
+  /* Purples written directly in a few spots (glow ring, hero tint, team photo backdrop) */
+  --color-violet-pale: #e9d5ff;
+  --color-hero-tint: #160d30;
+  --color-photo-end: #24133d;
+  /* The dot grid behind the pages: purple in dark mode, sky blue in light mode */
+  --color-dot: rgb(168 85 247 / 0.3);
+
+  /* Soft blue/purple tints for highlighted panels */
+  --color-tint-blue: #0f1229;
+  --color-tint-purple: #1a1030;
+  --color-badge: #172554;
+
+  /* Hero background animations */
+  --animate-drift-1: drift-1 18s ease-in-out infinite alternate;
+  --animate-drift-2: drift-2 22s ease-in-out infinite alternate;
+  --animate-drift-3: drift-3 26s ease-in-out infinite alternate;
+  --animate-grid: grid-move 2s linear infinite;
+  --animate-trace: trace 5s linear infinite;
+  --animate-line-in: line-in 0.35s ease-out both;
+  --animate-blink: blink 1s step-end infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-orbit: orbit 40s linear infinite;
+  --animate-orbit-reverse: orbit 40s linear infinite reverse;
+  --animate-progress: progress 5s linear both;
+  --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-float: float 4s ease-in-out infinite alternate;
+  --animate-beam-across: beam-across 10s linear infinite;
+  --animate-bob: bob 4s ease-in-out infinite alternate;
+
+  /* Gently floating and tilting (the 404) */
+  @keyframes bob {
+    from { transform: translateY(-6px) rotate(-3deg); }
+    to { transform: translateY(6px) rotate(3deg); }
+  }
+
+  /* A streak of light travelling the full width of its line */
+  @keyframes beam-across {
+    from { left: -12rem; }
+    to { left: 100%; }
+  }
+
+  @keyframes float {
+    to { transform: translateY(-12px); }
+  }
+
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes orbit {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes progress {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+
+  @keyframes drift-1 {
+    to { transform: translate(35%, 25%) scale(1.25); }
+  }
+  @keyframes drift-2 {
+    to { transform: translate(-30%, 20%) scale(0.85); }
+  }
+  @keyframes drift-3 {
+    to { transform: translate(15%, -30%) scale(1.15); }
+  }
+  @keyframes grid-move {
+    to { background-position: 0 60px; }
+  }
+  @keyframes trace {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes line-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+}
+
+html.light {
+  --color-bg: #ffffff;
+  --color-surface: #f8fafc;
+  --color-elevated: #f1f5f9;
+  --color-line: #e2e8f0;
+  --color-fg: #0f172a;
+  --color-fg-muted: #475569;
+  --color-fg-subtle: #64748b;
+  --color-tint-blue: #eef2ff;
+  --color-tint-purple: #f5f3ff;
+  --color-badge: #dbeafe;
+
+  /* Light mode swaps every purple for sky blues; dark mode keeps the purple.
+     The pink/fuchsia/violet shades here are Tailwind colors the site uses in its purple gradients. */
+  --color-violet: #0284c7;
+  --color-violet-bright: #38bdf8;
+  --color-violet-pale: #bae6fd;
+  --color-violet-300: #7dd3fc;
+  --color-violet-400: #38bdf8;
+  --color-pink-400: #67e8f9;
+  --color-pink-500: #22d3ee;
+  --color-fuchsia-300: #bae6fd;
+  --color-tint-purple: #f0f9ff;
+  --color-hero-tint: #0b1d36;
+  --color-photo-end: #0c2a45;
+  --color-dot: rgb(2 132 199 / 0.28);
+}
+
+/* Keeps a section in dark colors even in light mode (e.g. the Our Approach band on the About page). */
+.theme-dark {
+  --color-bg: #0a0a0a;
+  --color-surface: #111111;
+  --color-elevated: #262626;
+  --color-line: #262626;
+  --color-fg: #fafafa;
+  --color-fg-muted: #a3a3a3;
+  --color-fg-subtle: #737373;
+  --color-tint-blue: #0f1229;
+  --color-tint-purple: #1a1030;
+  --color-badge: #172554;
+  color: var(--color-fg);
+  /* Native controls (dropdown lists, scrollbars) use dark colors too */
+  color-scheme: dark;
+}
+
+/* Light mode only: the soft sky-blue shadow under cards (dark mode has none). A card's own hover glow still wins. */
+/* The soft shadow under cards: purple in dark mode, sky blue in light mode. A card's own hover glow still wins. */
+@utility card-shadow {
+  &:not(:hover, :focus-visible) {
+    box-shadow: 0 18px 40px -16px rgb(124 58 237 / 0.55), 0 2px 6px -2px rgb(168 85 247 / 0.3);
+  }
+  html.light &:not(:hover, :focus-visible) {
+    box-shadow: 0 18px 40px -16px rgb(2 132 199 / 0.45), 0 2px 6px -2px rgb(56 189 248 / 0.25);
+  }
+}
+
+/* On hover a thin line draws across the card's top edge, left to right: blue-purple-pink in dark mode,
+   blue-sky-cyan in light mode (it uses the theme colors). */
+@utility edge-line {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--color-brand), var(--color-violet-bright), var(--color-pink-400));
+    box-shadow: 0 0 12px 1px color-mix(in srgb, var(--color-violet-bright) 60%, transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease-out;
+    pointer-events: none;
+  }
+  &:hover::before,
+  &:focus-visible::before {
+    transform: scaleX(1);
+  }
+}
+
+/* On hover the card lifts a little and its shadow grows: purple in dark mode, sky blue in light mode. */
+@utility hover-lift {
+  transition: translate 0.25s ease-out, box-shadow 0.25s ease-out;
+  &:hover {
+    translate: 0 -6px;
+    box-shadow: 0 26px 46px -18px rgb(124 58 237 / 0.6), 0 2px 8px -2px rgb(168 85 247 / 0.35);
+  }
+  html.light &:hover {
+    box-shadow: 0 26px 46px -18px rgb(2 132 199 / 0.55), 0 2px 8px -2px rgb(56 189 248 / 0.3);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      translate: none;
+    }
+  }
+}
+
+/* Image loading: a soft glow sweeps across the empty image box, then the picture fades in sharp (see SmartImage).
+   It uses the theme colors, so it's purple in dark mode and sky blue in light mode. */
+@utility img-shimmer {
+  background-color: var(--color-elevated);
+  background-image: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-violet-bright) 25%, transparent), transparent);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: img-shimmer 1.4s linear infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility img-fade-in {
+  animation: img-fade-in 0.5s ease-out;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes img-shimmer {
+  from { background-position: -50% 0; }
+  to { background-position: 150% 0; }
+}
+
+@keyframes img-fade-in {
+  from { opacity: 0; filter: blur(8px); }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+  }
+
+  /* Plain shadows (shadow-lg, shadow-2xl...) are tinted instead of grey: purple in dark mode, sky blue in light mode.
+     It sits in the base layer with no specificity, so a shadow given its own color (shadow-violet/30,
+     shadow-black/60) keeps it. */
+  :where(*) {
+    --tw-shadow-color: rgb(124 58 237 / 0.35);
+  }
+  :where(html.light *) {
+    --tw-shadow-color: rgb(2 132 199 / 0.2);
+  }
+}
