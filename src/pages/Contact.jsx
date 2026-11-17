@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CircleCheck, Clock, Mail, MapPin, Phone, Send } from 'lucide-react'
+import { CircleAlert, CircleCheck, Clock, LoaderCircle, Mail, MapPin, Phone, Send } from 'lucide-react'
 import Select from '../components/Select'
 import Reveal from '../components/Reveal'
 import { contactEmail, contactPhone, contactPhoneLink } from '../data/siteData'
@@ -51,14 +51,35 @@ function Field({ label, required, children }) {
   )
 }
 
-export default function Contact() {
-  const [sent, setSent] = useState(false)
+// The Cloudflare Worker that emails form messages to the studio inbox (the contact-worker folder).
+// Set in .env.development (local) and .env.production (live site).
+const contactUrl = import.meta.env.VITE_CONTACT_URL
 
-  // No backend yet: this just confirms on screen. Hook up Formspree, EmailJS or your own API here.
-  function handleSubmit(e) {
+export default function Contact() {
+  // 'idle' | 'sending' | 'sent' | 'error'
+  const [status, setStatus] = useState('idle')
+  const [error, setError] = useState('')
+
+  async function handleSubmit(e) {
     e.preventDefault()
-    setSent(true)
-    e.currentTarget.reset()
+    const form = e.currentTarget
+    setStatus('sending')
+    try {
+      if (!contactUrl) throw new Error("The contact form isn't connected yet. Please email us instead.")
+      const res = await fetch(contactUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      })
+      const result = await res.json().catch(() => ({}))
+      if (!res.ok || !result.ok) throw new Error(result.error || "Your message couldn't be sent. Please email us instead.")
+      setStatus('sent')
+      form.reset()
+    } catch (err) {
+      // A network failure (offline, Worker down) has a technical message, so show a friendly one instead
+      setError(err instanceof TypeError ? "Your message couldn't be sent. Check your connection or email us instead." : err.message)
+      setStatus('error')
+    }
   }
 
   return (
@@ -120,20 +141,43 @@ export default function Contact() {
                   />
                 </Field>
 
-                {sent && (
+                {/* Hidden from people; spam bots fill it in, and the Worker quietly drops those messages */}
+                <input name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+
+                {status === 'sent' && (
                   <p
                     className="flex items-center gap-2 rounded-xl bg-emerald-500/15 px-4 py-3 text-emerald-400"
                     role="status"
                   >
-                    <CircleCheck className="size-5" /> Thanks! Your message has been received.
+                    <CircleCheck className="size-5 shrink-0" /> Thanks! Your message has been sent. We'll get back to you within 24 hours.
+                  </p>
+                )}
+                {status === 'error' && (
+                  <p className="flex items-center gap-2 rounded-xl bg-red-500/15 px-4 py-3 text-red-400" role="alert">
+                    <CircleAlert className="size-5 shrink-0" />
+                    <span>
+                      {error}{' '}
+                      <a href={`mailto:${contactEmail}`} className="underline hover:text-red-300">
+                        {contactEmail}
+                      </a>
+                    </span>
                   </p>
                 )}
 
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-linear-to-r from-brand to-violet py-4 text-lg font-semibold text-white shadow-lg shadow-violet/30 transition hover:shadow-violet/50"
+                  disabled={status === 'sending'}
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-linear-to-r from-brand to-violet py-4 text-lg font-semibold text-white shadow-lg shadow-violet/30 transition hover:shadow-violet/50 disabled:cursor-wait disabled:opacity-70"
                 >
-                  <Send className="size-5" /> Send Message
+                  {status === 'sending' ? (
+                    <>
+                      <LoaderCircle className="size-5 animate-spin" /> Sending…
+                    </>
+                  ) : (
+                    <>
+                      <Send className="size-5" /> Send Message
+                    </>
+                  )}
                 </button>
               </form>
             </DarkPanel>
