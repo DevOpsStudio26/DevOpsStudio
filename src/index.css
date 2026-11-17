@@ -8,6 +8,8 @@
   --color-surface: #111111;
   --color-elevated: #262626;
   --color-line: #262626;
+  /* Outline of the huge faded words behind section titles */
+  --color-ghost: rgb(255 255 255 / 0.09);
   --color-fg: #fafafa;
   --color-fg-muted: #a3a3a3;
   --color-fg-subtle: #737373;
@@ -99,6 +101,7 @@
 }
 
 html.light {
+  --color-ghost: rgb(15 23 42 / 0.1);
   --color-bg: #ffffff;
   --color-surface: #f8fafc;
   --color-elevated: #f1f5f9;
@@ -132,6 +135,8 @@ html.light {
   --color-surface: #111111;
   --color-elevated: #262626;
   --color-line: #262626;
+  /* Outline of the huge faded words behind section titles */
+  --color-ghost: rgb(255 255 255 / 0.09);
   --color-fg: #fafafa;
   --color-fg-muted: #a3a3a3;
   --color-fg-subtle: #737373;
@@ -260,7 +265,7 @@ html.light {
     letter-spacing: -0.05em;
     white-space: nowrap;
     color: transparent;
-    -webkit-text-stroke: 1.5px var(--color-line);
+    -webkit-text-stroke: 1.5px var(--color-ghost);
     user-select: none;
     pointer-events: none;
     mask-image: linear-gradient(to bottom, #000 30%, transparent 72%);
