@@ -157,11 +157,11 @@ export default function Testimonials({ bare = false }) {
   const content = (
     <div>
       {/* Heading like the other sections: italic accent over a huge outlined "REVIEWS" with a soft glow */}
-      <div className="relative isolate mb-14 overflow-hidden py-6 text-center">
+      <div className="relative isolate mb-14 overflow-x-clip pt-16 pb-6 text-center">
         <div aria-hidden="true" className="absolute inset-0 -z-10 m-auto size-56 rounded-full bg-violet/25 blur-3xl" />
         <span
           aria-hidden="true"
-          className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 text-[clamp(4rem,13vw,9rem)] leading-none font-black tracking-tighter text-transparent select-none [-webkit-text-stroke:1.5px_var(--color-line)]"
+          className="ghost-word text-[clamp(3.5rem,12vw,7.5rem)]"
         >
           REVIEWS
         </span>

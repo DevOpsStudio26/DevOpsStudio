@@ -48,14 +48,6 @@ export default function BookendCta() {
       ))}
       <style>{'@keyframes cta-ripple { 0% { transform: scale(1); opacity: 0.6 } 100% { transform: scale(2.1); opacity: 0 } }'}</style>
 
-      {/* Huge outlined "LET'S TALK" behind the heading, like the outlined words behind Services, Work and Reviews */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 text-[clamp(4rem,16vw,12rem)] leading-none font-black tracking-tighter whitespace-nowrap text-transparent select-none [-webkit-text-stroke:1.5px_rgba(255,255,255,0.08)]"
-      >
-        LET&apos;S TALK
-      </span>
-
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-sm text-emerald-400">
           <span className="relative flex size-2">
@@ -65,9 +57,15 @@ export default function BookendCta() {
           Booking projects for {month}
         </span>
         {/* Same heading style as the other sections: white, with an italic purple accent */}
-        <h2 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-6xl">
-          Have an idea? Let&apos;s <span className="font-serif font-normal italic text-violet-bright">build it.</span>
-        </h2>
+        {/* Huge outlined "LET'S TALK" above the heading, fading out before the text, like Services, Work and Reviews */}
+        <div className="relative isolate mt-16">
+          <span aria-hidden="true" className="ghost-word text-[clamp(3.5rem,13vw,8.5rem)] [-webkit-text-stroke:1.5px_rgba(255,255,255,0.1)]">
+            LET&apos;S TALK
+          </span>
+          <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+            Have an idea? Let&apos;s <span className="font-serif font-normal italic text-violet-bright">build it.</span>
+          </h2>
+        </div>
         <p className="mx-auto mt-5 max-w-xl text-lg text-white/90">Book a free 30-minute call. No pressure, just a plan.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link

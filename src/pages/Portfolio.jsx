@@ -165,14 +165,14 @@ export default function Portfolio() {
         {/* A huge outlined "TEAM" sits behind the heading, with a small purple glow in the middle */}
         <header
           ref={headerRef}
-          className={`relative isolate overflow-hidden py-16 text-center transition-all duration-1000 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
+          className={`relative isolate overflow-x-clip py-16 text-center transition-all duration-1000 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
             headerInView ? 'translate-y-0 opacity-100' : '-translate-y-16 opacity-0'
           }`}
         >
           <div aria-hidden="true" className="absolute inset-0 -z-10 m-auto size-64 rounded-full bg-violet/25 blur-3xl" />
           <span
             aria-hidden="true"
-            className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 text-[clamp(5rem,20vw,15rem)] leading-none font-black tracking-tighter text-transparent select-none [-webkit-text-stroke:1.5px_var(--color-line)]"
+            className="ghost-word text-[clamp(4rem,16vw,9.5rem)]"
           >
             TEAM
           </span>

@@ -66,14 +66,14 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* A huge outlined "HELLO" and a small glow sit behind the heading. Sections slide in like About and Portfolio. */}
         <Reveal from="down">
-          <header className="relative isolate overflow-hidden py-14 text-center">
+          <header className="relative isolate overflow-x-clip py-14 text-center">
             <div
               aria-hidden="true"
               className="absolute inset-0 -z-10 m-auto size-64 rounded-full bg-violet/25 blur-3xl"
             />
             <span
               aria-hidden="true"
-              className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 text-[clamp(5rem,18vw,13rem)] leading-none font-black tracking-tighter text-transparent select-none [-webkit-text-stroke:1.5px_var(--color-line)]"
+              className="ghost-word text-[clamp(4rem,15vw,9rem)]"
             >
               HELLO
             </span>

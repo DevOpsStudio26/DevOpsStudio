@@ -245,3 +245,24 @@ html.light {
     --tw-shadow-color: rgb(2 132 199 / 0.2);
   }
 }
+
+/* The huge outlined word behind section titles (SERVICES, WORK, REVIEWS…). It sits higher than the title and
+   fades out before reaching it, so its outline never runs through the title text. Size it with a text-[clamp()] class. */
+@layer components {
+  .ghost-word {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    z-index: -10;
+    translate: 0 -48%;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-line);
+    user-select: none;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, #000 30%, transparent 72%);
+  }
+}

@@ -55,11 +55,11 @@ export default function Home() {
         <div className="relative isolate mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div aria-hidden="true" className="absolute top-40 left-1/2 -z-10 h-72 w-[36rem] max-w-full -translate-x-1/2 rounded-full bg-violet/20 blur-[90px]" />
           {/* Heading like the page headers: italic accent over a huge outlined "SERVICES" with a soft glow */}
-          <div className="relative isolate mb-14 overflow-hidden py-6 text-center">
+          <div className="relative isolate mb-14 overflow-x-clip py-6 text-center">
             <div aria-hidden="true" className="absolute inset-0 -z-10 m-auto size-56 rounded-full bg-violet/25 blur-3xl" />
             <span
               aria-hidden="true"
-              className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 text-[clamp(4rem,14vw,10rem)] leading-none font-black tracking-tighter text-transparent select-none [-webkit-text-stroke:1.5px_var(--color-line)]"
+              className="ghost-word text-[clamp(3.5rem,12vw,7.5rem)]"
             >
               SERVICES
             </span>
@@ -84,7 +84,7 @@ export default function Home() {
             <div aria-hidden="true" className="absolute inset-0 -z-10 m-auto size-56 rounded-full bg-violet/25 blur-3xl" />
             <span
               aria-hidden="true"
-              className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 text-[clamp(4rem,14vw,10rem)] leading-none font-black tracking-tighter text-transparent select-none [-webkit-text-stroke:1.5px_var(--color-line)]"
+              className="ghost-word text-[clamp(3.5rem,12vw,7.5rem)]"
             >
               WORK
             </span>
